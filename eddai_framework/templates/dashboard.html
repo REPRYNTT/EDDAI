@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E.D.D.A.I. - Environmental AI Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-br from-green-50 to-blue-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-lg border-b border-green-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-6">
+                <div class="flex items-center">
+                    <i class="fas fa-leaf text-green-600 text-3xl mr-3"></i>
+                    <div>
+                        <h1 class="text-3xl font-bold text-gray-900">E.D.D.A.I.</h1>
+                        <p class="text-sm text-gray-600">Environmental Data-Driven Adaptive Intelligence</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="text-right">
+                        <div class="text-sm text-gray-500">System Status</div>
+                        <div class="flex items-center">
+                            <div class="w-3 h-3 bg-green-500 rounded-full mr-2 animate-pulse"></div>
+                            <span class="text-sm font-medium text-green-600">Active</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Main Dashboard Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+            <!-- Left Column - Environmental Metrics -->
+            <div class="lg:col-span-2 space-y-6">
+
+                <!-- Health Overview Card -->
+                <div class="bg-white rounded-xl shadow-lg p-6 border border-green-100">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-xl font-semibold text-gray-800 flex items-center">
+                            <i class="fas fa-heartbeat text-red-500 mr-2"></i>
+                            Ecosystem Health
+                        </h2>
+                        <div class="text-2xl font-bold text-green-600" id="health-score">--</div>
+                    </div>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-blue-600" id="biodiversity">--</div>
+                            <div class="text-sm text-gray-600">Biodiversity</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-green-600" id="carbon">--</div>
+                            <div class="text-sm text-gray-600">Carbon Flux</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-orange-600" id="disturbance">--</div>
+                            <div class="text-sm text-gray-600">Disturbance</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-blue-400" id="moisture">--</div>
+                            <div class="text-sm text-gray-600">Soil Moisture</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Decision Card -->
+                <div class="bg-white rounded-xl shadow-lg p-6 border border-blue-100">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                        <i class="fas fa-brain text-blue-500 mr-2"></i>
+                        AI Decision Engine
+                    </h2>
+                    <div class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-4">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <div class="text-lg font-semibold text-gray-800" id="ai-action">Analyzing...</div>
+                                <div class="text-sm text-gray-600" id="ai-reasoning">Processing environmental data...</div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-sm text-gray-500">Confidence</div>
+                                <div class="text-lg font-bold text-green-600" id="confidence">--%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recommendations Card -->
+                <div class="bg-white rounded-xl shadow-lg p-6 border border-purple-100">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                        <i class="fas fa-lightbulb text-purple-500 mr-2"></i>
+                        AI Recommendations
+                    </h2>
+                    <div id="recommendations-list" class="space-y-3">
+                        <div class="animate-pulse flex space-x-4">
+                            <div class="rounded-full bg-gray-300 h-8 w-8"></div>
+                            <div class="flex-1 space-y-2">
+                                <div class="h-4 bg-gray-300 rounded w-3/4"></div>
+                                <div class="h-4 bg-gray-300 rounded w-1/2"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right Column - Controls & Charts -->
+            <div class="space-y-6">
+
+                <!-- Quick Actions -->
+                <div class="bg-white rounded-xl shadow-lg p-6 border border-yellow-100">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                        <i class="fas fa-play text-yellow-500 mr-2"></i>
+                        Quick Actions
+                    </h2>
+                    <div class="space-y-3">
+                        <button onclick="runSimulation()" class="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-lg transition duration-200 flex items-center justify-center">
+                            <i class="fas fa-play mr-2"></i>
+                            Run AI Analysis
+                        </button>
+                        <button onclick="simulateDisturbance('drought')" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-medium py-2 px-4 rounded-lg transition duration-200 flex items-center justify-center">
+                            <i class="fas fa-sun mr-2"></i>
+                            Simulate Drought
+                        </button>
+                        <button onclick="simulateDisturbance('flood')" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg transition duration-200 flex items-center justify-center">
+                            <i class="fas fa-cloud-rain mr-2"></i>
+                            Simulate Flood
+                        </button>
+                    </div>
+                </div>
+
+                <!-- SOF Weights Chart -->
+                <div class="bg-white rounded-xl shadow-lg p-6 border border-indigo-100">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                        <i class="fas fa-balance-scale text-indigo-500 mr-2"></i>
+                        Symbiotic Objective Function
+                    </h2>
+                    <canvas id="sofChart" width="300" height="200"></canvas>
+                </div>
+
+                <!-- Environmental Data Chart -->
+                <div class="bg-white rounded-xl shadow-lg p-6 border border-teal-100">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                        <i class="fas fa-chart-line text-teal-500 mr-2"></i>
+                        Trends
+                    </h2>
+                    <canvas id="trendsChart" width="300" height="150"></canvas>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="mt-12 text-center text-gray-500 text-sm">
+            <p>🌱 E.D.D.A.I. - AI as ecosystem, not just in ecosystem 🌍</p>
+            <p class="mt-1">Built with Flask, Chart.js, and Tailwind CSS</p>
+        </footer>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Global variables for charts and data
+        let sofChart, trendsChart;
+        let dataHistory = [];
+
+        // Initialize charts when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeCharts();
+            // Auto-refresh every 5 seconds
+            setInterval(updateDashboard, 5000);
+        });
+
+        function initializeCharts() {
+            // SOF Weights Chart
+            const sofCtx = document.getElementById('sofChart').getContext('2d');
+            sofChart = new Chart(sofCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Human Yield', 'Biodiversity', 'Ecosystem Stability', 'Carbon Sequester'],
+                    datasets: [{
+                        data: [0.25, 0.25, 0.25, 0.25],
+                        backgroundColor: ['#3B82F6', '#10B981', '#8B5CF6', '#F59E0B'],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { boxWidth: 12, font: { size: 11 } }
+                        }
+                    }
+                }
+            });
+
+            // Trends Chart
+            const trendsCtx = document.getElementById('trendsChart').getContext('2d');
+            trendsChart = new Chart(trendsCtx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Biodiversity Index',
+                        data: [],
+                        borderColor: '#10B981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        tension: 0.4
+                    }, {
+                        label: 'Disturbance Level',
+                        data: [],
+                        borderColor: '#EF4444',
+                        backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: { beginAtZero: true, max: 1 }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+        }
+
+        async function updateDashboard() {
+            try {
+                const response = await fetch('/api/ecosystem_status');
+                const data = await response.json();
+
+                // Update metrics
+                document.getElementById('biodiversity').textContent = data.metrics.biodiversity_index;
+                document.getElementById('carbon').textContent = data.metrics.carbon_flux;
+                document.getElementById('disturbance').textContent = data.metrics.disturbance_level;
+                document.getElementById('moisture').textContent = data.metrics.soil_moisture;
+
+                // Update AI decision
+                document.getElementById('ai-action').textContent = data.ai_decision.action;
+                document.getElementById('ai-reasoning').textContent = data.ai_decision.reasoning;
+                document.getElementById('confidence').textContent = Math.round(data.ai_decision.confidence * 100) + '%';
+
+                // Update health score
+                document.getElementById('health-score').textContent = Math.round(
+                    (data.metrics.biodiversity_index * 0.3 +
+                     (1 - data.metrics.disturbance_level) * 0.3 +
+                     data.metrics.carbon_flux * 0.2 +
+                     data.metrics.soil_moisture * 0.2) * 100
+                );
+
+                // Update SOF chart
+                sofChart.data.datasets[0].data = [
+                    data.sof_weights.human_yield,
+                    data.sof_weights.biodiversity,
+                    data.sof_weights.ecosystem_stability,
+                    data.sof_weights.carbon_sequester
+                ];
+                sofChart.update();
+
+                // Update trends (keep last 10 data points)
+                dataHistory.push(data);
+                if (dataHistory.length > 10) {
+                    dataHistory.shift();
+                }
+
+                trendsChart.data.labels = dataHistory.map((_, i) => `T-${10-i}`);
+                trendsChart.data.datasets[0].data = dataHistory.map(d => d.metrics.biodiversity_index);
+                trendsChart.data.datasets[1].data = dataHistory.map(d => d.metrics.disturbance_level);
+                trendsChart.update();
+
+                // Update recommendations
+                updateRecommendations();
+
+            } catch (error) {
+                console.error('Error updating dashboard:', error);
+            }
+        }
+
+        async function updateRecommendations() {
+            try {
+                const response = await fetch('/api/get_recommendations');
+                const data = await response.json();
+
+                const recommendationsList = document.getElementById('recommendations-list');
+
+                if (data.recommendations.length > 0) {
+                    recommendationsList.innerHTML = data.recommendations.map(rec => `
+                        <div class="flex items-start space-x-3 p-3 bg-${rec.priority === 'High' ? 'red' : 'yellow'}-50 rounded-lg border border-${rec.priority === 'High' ? 'red' : 'yellow'}-200">
+                            <div class="flex-shrink-0">
+                                <span class="inline-flex items-center justify-center h-8 w-8 rounded-full bg-${rec.priority === 'High' ? 'red' : 'yellow'}-100">
+                                    <i class="fas fa-exclamation-triangle text-${rec.priority === 'High' ? 'red' : 'yellow'}-600"></i>
+                                </span>
+                            </div>
+                            <div class="flex-1">
+                                <div class="text-sm font-medium text-gray-800">${rec.action}</div>
+                                <div class="text-sm text-gray-600">${rec.impact}</div>
+                                <div class="text-xs text-${rec.priority === 'High' ? 'red' : 'yellow'}-600 font-medium mt-1">${rec.category} - ${rec.priority} Priority</div>
+                            </div>
+                        </div>
+                    `).join('');
+                } else {
+                    recommendationsList.innerHTML = `
+                        <div class="text-center py-4 text-gray-500">
+                            <i class="fas fa-check-circle text-green-500 text-2xl mb-2"></i>
+                            <div>Ecosystem conditions are optimal</div>
+                            <div class="text-sm">No immediate actions required</div>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error updating recommendations:', error);
+            }
+        }
+
+        async function simulateDisturbance(type) {
+            try {
+                const response = await fetch('/api/simulate_disturbance', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ type: type, intensity: 0.7 })
+                });
+                const data = await response.json();
+
+                // Show notification
+                showNotification(`${type.charAt(0).toUpperCase() + type.slice(1)} simulation started`, 'info');
+
+                // Refresh dashboard after a moment
+                setTimeout(updateDashboard, 1000);
+
+            } catch (error) {
+                console.error('Error simulating disturbance:', error);
+                showNotification('Error simulating disturbance', 'error');
+            }
+        }
+
+        function runSimulation() {
+            updateDashboard();
+            showNotification('AI analysis completed', 'success');
+        }
+
+        function showNotification(message, type) {
+            // Simple notification (you could enhance this with a proper notification system)
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 px-4 py-2 rounded-lg text-white z-50 ${
+                type === 'success' ? 'bg-green-500' :
+                type === 'error' ? 'bg-red-500' : 'bg-blue-500'
+            }`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Initial dashboard update
+        updateDashboard();
+    </script>
+</body>
+</html>

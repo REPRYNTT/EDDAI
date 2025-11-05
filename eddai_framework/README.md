@@ -74,6 +74,26 @@ for step in range(100):
           f"Biodiversity={forest_state['metrics']['biodiversity_index']:.3f}")
 ```
 
+### 🌐 Web Dashboard (NEW!)
+
+**Launch the interactive web app:**
+
+```bash
+# Install Flask
+pip install flask
+
+# Run the web dashboard
+python app.py
+```
+
+Then open http://localhost:5000 in your browser to access the AI-powered environmental dashboard!
+
+**Deploy to Vercel:**
+
+1. Push your code to GitHub
+2. Connect your GitHub repo to Vercel
+3. Deploy automatically - Vercel handles everything!
+
 ### Running Demos
 
 ```bash
@@ -82,6 +102,9 @@ python examples/basic_demo.py --steps 50 --visualize
 
 # Disturbance response demo
 python examples/disturbance_response_demo.py
+
+# Run all tests
+python -m pytest tests/ -v
 ```
 
 ## 📊 Key Features
@@ -100,6 +123,13 @@ python examples/disturbance_response_demo.py
 - **Modular design**: Easy to extend with new sensors or biomes
 - **Simulation framework**: Test in virtual environments before deployment
 - **Research-friendly**: Comprehensive logging and analysis tools
+
+### 🌐 Interactive Web Dashboard
+- **Real-time AI Analysis**: Live environmental monitoring with AI insights
+- **Interactive Simulations**: Test drought, flood, and fire scenarios
+- **AI Recommendations**: Get intelligent suggestions for ecosystem management
+- **Visual Analytics**: Charts showing biodiversity, carbon flux, and disturbance trends
+- **Educational Tool**: Learn about ecological systems and AI decision-making
 
 ## 🧪 Simulation Environment
 
